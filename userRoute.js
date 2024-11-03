@@ -1,15 +1,13 @@
 const express = require('express');
 const app = express.Router();
-const User = require('./userSchema');
+const { User } = require('./userSchema');
 
 // 1. Get All Tasks
 app.get('/', async (req, res) => {
     try {
         const users = await User.find();
 
-        User.greet();
-
-        res.status(200).json(tasks);
+        res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving users', error });
     }
@@ -20,9 +18,7 @@ app.get('/getAdults', async (req, res) => {
     try {
         const users = await User.find({ age: { $gte: 18 } });
 
-        User.greet();
-
-        res.status(200).json(tasks);
+        res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving users', error });
     }
@@ -46,7 +42,7 @@ app.post('/', async (req, res) => {
     try {
         const { firstName, lastName, email, address, mobile, age, password, city, role } = req.body;
 
-        const userTask = new User({ firstName, lastName, email, address, mobile, age, password, city });
+        const userTask = new User({ firstName, lastName, email, address, mobile, age, password, city, role });
 
         await userTask.save();
         res.status(201).json(userTask);

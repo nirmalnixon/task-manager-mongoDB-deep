@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const profile = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     loggedIn: { type: Date, required: true }
 });
 
@@ -42,7 +42,6 @@ const userSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now },
     role: { type: Number, enum: [0, 1, 2], required: true }, // 0: Owner, 1: Admin, 2: User
     refreshToken: { type: String }, // Store refresh token for session management
-    Profile: { type: mongoose.Schema.Types.ObjectId, ref: 'profile' }
 });
 
 // Pre-save Hook: Hash password before saving
